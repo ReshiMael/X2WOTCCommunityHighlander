@@ -97,6 +97,17 @@ simulated final function name ApplyEffect(const out EffectAppliedData ApplyEffec
 		return 'AA_NotAUnit';
 	}
 
+	//Begin Issue #1575
+	/// HL-Docs: feature:EffectImmunity; issue:1575; tags:tactical
+	/// Adding special immunity to effect check to enable special handling to block effects from being applied to a unit
+	if (TargetStateObject != none)
+  {
+      if (TargetStateObject.IsImmuneToEffect(self, SourceStateObject, AbilityStateObject))
+      {
+          return 'AA_UnitIsImmune';
+      }
+  }
+	//End Issue #1575
 	AbilityStateObject = XComGameState_Ability(NewGameState.GetGameStateForObjectID(ApplyEffectParameters.AbilityStateObjectRef.ObjectID));
 	if( AbilityStateObject == none )
 	{
