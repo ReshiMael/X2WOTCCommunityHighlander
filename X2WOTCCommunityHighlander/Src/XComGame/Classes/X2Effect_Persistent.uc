@@ -850,6 +850,14 @@ function EGameplayBlocking ModifyGameplayDestinationBlockingForTarget(const XCom
 //  Register an effect in the config array EffectUpdatesOnMove on AbilityTemplateManager in order to receive these callbacks
 function OnUnitChangedTile(const out TTile NewTileLocation, XComGameState_Effect EffectState, XComGameState_Unit TargetUnit);
 
+//Begin Issue #1575
+/// HL-Docs: feature:EffectImmunity; issue:1575; tags:tactical
+/// Adding a boolean function to enable Persistent Effects on a unit to control whether or not OTHER X2ffects are allowed to be applied to this unit.
+/// This enables various functionality that was previously heavily limited by damage typing.
+/// An example use case: We specifically do not want to X2Effect_MindControl to be allowed to be applied to a unit, but we want to allow other Mental-typed effects to effect this unit.
+function bool ProvidesImmunityToEffect(X2Effect Effect, XComGameState_Effect EffectState, XComGameState_Unit SourceUnit, XComGameState_Unit TargetUnit, XComGameState_Ability AbilityState) { return false; }
+//End Issue #1575
+
 //  Add the name of the effect to X2AbilityTemplateManager AffectingEffectRedirectors and implement this function to handle potential redirects
 function bool EffectShouldRedirect(XComGameStateContext_Ability AbilityContext, XComGameState_Ability SourceAbility, XComGameState_Effect EffectState, const X2Effect PotentialRedirect, XComGameState_Unit SourceUnit, XComGameState_Unit TargetUnit, out StateObjectReference RedirectTarget, out name Reason, out name OverrideEffectResult) { return false; }
 
