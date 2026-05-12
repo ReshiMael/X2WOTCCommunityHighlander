@@ -97,6 +97,16 @@ simulated final function name ApplyEffect(const out EffectAppliedData ApplyEffec
 		return 'AA_NotAUnit';
 	}
 
+	//Begin Issue #1575
+	if (TargetStateObject != none)
+	{
+		if (TargetStateObject.IsImmuneToEffect(self, SourceStateObject, AbilityStateObject))
+		{
+			return 'AA_UnitIsImmune';
+		}
+	}
+	//End Issue #1575
+
 	AbilityStateObject = XComGameState_Ability(NewGameState.GetGameStateForObjectID(ApplyEffectParameters.AbilityStateObjectRef.ObjectID));
 	if( AbilityStateObject == none )
 	{
@@ -156,6 +166,17 @@ simulated final function name ApplyEffect(const out EffectAppliedData ApplyEffec
 				return 'AA_UnitIsImmune';
 		}
 	}
+
+	//Begin Issue #1575
+	if (TargetStateObject != none)
+	{
+		if (TargetStateObject.IsImmuneToEffect(self, SourceStateObject, AbilityStateObject))
+		{
+			return 'AA_UnitIsImmune';
+		}
+	}
+	//End Issue #1575
+
 	if (ApplyChanceFn != none)
 	{
 		AvailableCode = ApplyChanceFn(ApplyEffectParameters, kNewTargetState, NewGameState);
